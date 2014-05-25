@@ -131,6 +131,10 @@ def extract_metadata(report, report_path):
     path = "%s/%s" % (utils.data_dir(), report_path)
     pdf_file = open(path, "rb")
     pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+    if pdf_reader.isEncrypted:
+      result = pdf_reader.decrypt('')
+      if not result:
+        raise Exception("PDF file requires a password")
     report['pdf_metadata'] = dict(pdf_reader.documentInfo)
 
 def write_report(report):
