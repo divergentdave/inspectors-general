@@ -5,6 +5,7 @@ import logging
 import datetime
 import urllib.parse
 import PyPDF2
+import chardet
 
 # Save a report to disk, provide output along the way.
 #
@@ -131,11 +132,28 @@ def extract_metadata(report, report_path):
     path = "%s/%s" % (utils.data_dir(), report_path)
     pdf_file = open(path, "rb")
     pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+
     if pdf_reader.isEncrypted:
       result = pdf_reader.decrypt('')
       if not result:
         raise Exception("PDF file requires a password")
-    report['pdf_metadata'] = dict(pdf_reader.documentInfo)
+
+    metadata = dict(pdf_reader.documentInfo)
+
+    for key in metadata:
+      if isinstance(metadata[key], PyPDF2.generic.ByteStringObject):
+        my_bytes = bytes(metadata[key])
+        encoding = chardet.detect(my_bytes)['encoding']
+        metadata[key] = my_bytes.decode(encoding or 'utf8')
+      elif isinstance(metadata[key], PyPDF2.generic.TextStringObject):
+        metadata[key] = str(metadata[key])
+      elif isinstance(metadata[key], PyPDF2.generic.NameObject):
+        metadata[key] = str(metadata[key])
+      else:
+        raise Exception("Object of unexpected type found in PDF metadata (%s)" %
+                           type(metadata[key]))
+
+    report['pdf_metadata'] = metadata
 
 def write_report(report):
   data_path = path_for(report, "json")

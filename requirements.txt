@@ -4,3 +4,4 @@ PyQuery
 BeautifulSoup4
 pyyaml
 PyPDF2
+chardet
