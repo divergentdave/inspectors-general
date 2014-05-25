@@ -4,6 +4,7 @@ import re
 import logging
 import datetime
 import urllib.parse
+import PyPDF2
 
 # Save a report to disk, provide output along the way.
 #
@@ -34,6 +35,8 @@ def save_report(report):
 
   text_path = extract_report(report)
   logging.warn("\ttext: %s" % text_path)
+
+  extract_metadata(report, report_path)
 
   data_path = write_report(report)
   logging.warn("\tdata: %s" % data_path)
@@ -122,6 +125,13 @@ def extract_report(report):
   else:
     logging.warn("Unknown file type, don't know how to extract text!")
     return None
+
+def extract_metadata(report, report_path):
+  if report['file_type'].lower() == 'pdf':
+    path = "%s/%s" % (utils.data_dir(), report_path)
+    pdf_file = open(path, "rb")
+    pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+    report['pdf_metadata'] = dict(pdf_reader.documentInfo)
 
 def write_report(report):
   data_path = path_for(report, "json")
