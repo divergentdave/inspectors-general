@@ -4,6 +4,7 @@ import json
 import logging
 import yaml
 from bs4 import BeautifulSoup
+import datetime
 
 # scraper should be instantiated at class-load time, so that it can rate limit appropriately
 import scrapelib
