@@ -72,7 +72,7 @@ def dump_dates():
       print([date_name + "=" + metadata[date_name] for date_name in DATE_NAMES if date_name in metadata])
 
 def date_accuracy(date_name):
-  month = timedelta(days=30)
+  buckets = [0] * 31
   count_total = 0
   count_bad = 0
   json_re = re.compile(r'''.*\.json''')
@@ -86,13 +86,21 @@ def date_accuracy(date_name):
         creation_data = data["pdf_metadata"][date_name]
         creation_date = parse_pdf_date(creation_data)
         creation_date = creation_date.replace(tzinfo=timezone.utc)
+
+        count_total = count_total + 1
+
         delta = published_date - creation_date
-        if delta > month:
+        days = abs(delta).days
+        if days > 30:
           print(path, delta)
           count_bad = count_bad + 1
-        count_total = count_total + 1
+        else:
+          buckets[days] = buckets[days] + 1
+  for i in range(len(buckets)):
+    print("%d days: %d PDFs" % (i, buckets[i]))
   print("%d of %d PDFs had %s off by 30 days or more" %
           (count_bad, count_total, date_name))
+  print()
 
 def main():
   for date_name in DATE_NAMES:
