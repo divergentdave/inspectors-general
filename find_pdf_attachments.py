@@ -25,6 +25,8 @@ def main():
               print("%s has the following attachments: %s" % (original, ', '.join(attachments)))
           finally:
             shutil.rmtree(extract_dir)
+        except subprocess.CalledProcessException as e:
+          print(e)
         finally:
           try:
             if decrypted_file:
