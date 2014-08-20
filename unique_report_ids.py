@@ -5,7 +5,7 @@ from inspectors.utils import utils
 
 def main():
   options = utils.options()
-  report_id_history = set()
+  report_id_history = {}
   data_dir = utils.data_dir()
   for inspector in os.listdir(data_dir):
     inspector_path = os.path.join(data_dir, inspector)
@@ -21,9 +21,11 @@ def main():
                 report_data = json.load(open(json_path, "r", encoding="utf-8"))
                 report_id = report_data["report_id"]
                 if report_id in report_id_history:
-                  print("Duplicate report_id %s in %s" % (repr(report_id), json_path))
-                report_id_history.add(report_id)
+                  report_id_history[report_id].append(json_path)
+                  print("Duplicate report_id %s in %s" % (repr(report_id), ", ".join(report_id_history[report_id])))
+                else:
+                  report_id_history[report_id] = [json_path]
       if "global" not in options:
-        report_id_history = set()
+        report_id_history = {}
 
 main()
