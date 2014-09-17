@@ -27,6 +27,19 @@ REPORT_PUBLISHED_MAPPING = {
 REPORTS_URL = "http://www.cftc.gov/About/OfficeoftheInspectorGeneral/index.htm"
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.cftc.gov/About/OfficeoftheInspectorGeneral/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'cftc',
+    'inspector_url': REPORTS_URL,
+    'agency': 'cftc',
+    'agency_name': 'Commodity Futures Trading Commission'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   # Pull the audit reports

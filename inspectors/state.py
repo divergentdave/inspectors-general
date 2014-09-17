@@ -109,6 +109,19 @@ BLACKLIST_REPORT_URLS = [
 REPORT_URLS_SEEN = set()
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://oig.state.gov/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'state',
+    'inspector_url': 'http://oig.state.gov/',
+    'agency': 'state',
+    'agency_name': 'Department of State'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   topics = options.get('topics')

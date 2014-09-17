@@ -38,6 +38,19 @@ OTHER_REPORTS_URl = "http://www.si.edu/OIG/ReportsToCongress"
 report_ids_seen = set()
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.si.edu/OIG/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'smithsonian',
+    'inspector_url': 'http://www.si.edu/OIG',
+    'agency': 'smithsonian',
+    'agency_name': 'Smithsonian Institution'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   # # Pull the RSS feed

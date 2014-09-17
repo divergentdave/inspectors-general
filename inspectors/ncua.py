@@ -23,6 +23,19 @@ SEMIANNUAL_REPORTS_URL = "http://www.ncua.gov/about/Leadership/CO/OIG/Pages/Semi
 FOIA_REPORTS_URL = "http://www.ncua.gov/about/Leadership/CO/OIG/Pages/FOIA2012.aspx"
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.ncua.gov/about/Leadership/CO/OIG/Pages/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': "ncua",
+    'inspector_url': "http://www.ncua.gov/about/Leadership/Pages/page_oig.aspx",
+    'agency': "ncua",
+    'agency_name': "National Credit Union Administration"
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   # Pull the audit reports

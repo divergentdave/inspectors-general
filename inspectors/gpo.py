@@ -30,6 +30,19 @@ REPORT_URLS = {
 }
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.gpo.gov/oig/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'gpo',
+    'inspector_url': 'http://www.gpo.gov/oig/',
+    'agency': 'gpo',
+    'agency_name': 'Government Printing Office'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   # Pull the reports

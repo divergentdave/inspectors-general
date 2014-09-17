@@ -9,6 +9,19 @@ import logging
 archive = 1979
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://gsaig.gov/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'gsa',
+    'inspector_url': 'http://gsaig.gov/',
+    'agency': 'gsa',
+    'agency_name': 'General Services Administration'
+  })
+  return
+
   crawl_index(SEMIANNUAL_REPORTS_URL, options)
   crawl_index(AUDIT_REPORTS_URL, options, True)
   crawl_index(PEER_REVIEW_REPORTS_URL, options)

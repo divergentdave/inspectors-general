@@ -40,6 +40,19 @@ REPORT_TYPE_MAP = {
 }
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.cpb.org/oig/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'cpb',
+    'inspector_url': SEMIANNUAL_REPORTS_URL,
+    'agency': 'cpb',
+    'agency_name': 'Corporation for Public Broadcasting'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   # Pull the reports

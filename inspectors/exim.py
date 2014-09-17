@@ -9,6 +9,19 @@ import re
 archive = 2007
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.exim.gov/oig/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'exim',
+    'inspector_url': WHATS_NEW_URL,
+    'agency': 'exim',
+    'agency_name': 'Export-Import Bank of the United States'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   published_on = None

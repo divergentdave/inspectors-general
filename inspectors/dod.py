@@ -102,6 +102,19 @@ RE_RESTRICTED = re.compile('Restricted', re.I)
 RE_AFGHANISTAN = re.compile('Provided to the Security Forces of Afghanistan', re.I)
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.dodig.mil/pubs/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'dod',
+    'inspector_url': BASE_URL,
+    'agency': 'dod',
+    'agency_name': 'Department of Defense'
+  })
+  return
+
   only = options.get('topics')
   if only:
     only = set(only.split(','))

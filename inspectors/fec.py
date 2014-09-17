@@ -43,6 +43,19 @@ REPORT_PUBLISHED_MAPPING = {
 
 
 def run(options):
+  inspector.save_report({
+    'url': 'http://www.fec.gov/fecig/doesyour404work',
+    'file_type': 'htm',
+    'published_on': '2014-01-01',
+    'report_id': '404_test',
+    'title': '404 test',
+    'inspector': 'fec',
+    'inspector_url': REPORTS_URL,
+    'agency': 'fec',
+    'agency_name': 'Federal Election Commission'
+  })
+  return
+
   year_range = inspector.year_range(options, archive)
 
   doc = BeautifulSoup(utils.download(REPORTS_URL))
